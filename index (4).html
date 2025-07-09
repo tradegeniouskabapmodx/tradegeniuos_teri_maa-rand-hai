@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFINITE ACCESS</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 400px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0.1),
+                rgba(255, 255, 255, 0)
+            );
+            transform: rotate(30deg);
+            pointer-events: none;
+            animation: shine 8s infinite;
+        }
+        
+        @keyframes shine {
+            0%, 100% {
+                transform: rotate(30deg) translate(-30%, -30%);
+            }
+            50% {
+                transform: rotate(30deg) translate(30%, 30%);
+            }
+        }
+        
+        .title {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .emoji {
+            font-size: 3rem;
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: floatEmoji 3s infinite ease-in-out;
+        }
+        
+        @keyframes floatEmoji {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+        
+        .title span {
+            display: inline-block;
+            animation: shake 5s infinite ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-5px) rotate(2deg);
+            }
+            50% {
+                transform: translateY(0) rotate(0deg);
+            }
+            75% {
+                transform: translateY(5px) rotate(-2deg);
+            }
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .input-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            animation: float 4s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(5px);
+            }
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .input-group input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s;
+        }
+        
+        .toggle-password:hover {
+            color: rgba(255, 255, 255, 1);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #00b4db, #0083b0);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0, 180, 219, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 180, 219, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .forgot-password a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        
+        .forgot-password a:hover {
+            color: rgba(255, 255, 255, 1);
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float-particle 15s infinite linear;
+        }
+        
+        @keyframes float-particle {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        .password-hint {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            animation: pulse 4s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+        
+        .rainbow-text {
+            background: linear-gradient(to right, 
+                #ff0000, 
+                #ff7f00, 
+                #ffff00, 
+                #00ff00, 
+                #0000ff, 
+                #4b0082, 
+                #9400d3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 400% 400%;
+            animation: rainbow 3s ease infinite;
+        }
+        
+        @keyframes rainbow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .infinite-symbol {
+            font-size: 3rem;
+            margin-top: 20px;
+            text-align: center;
+            animation: spin 5s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="login-container">
+        <div class="emoji">🔐</div>
+        <h1 class="title">
+            <span>L</span>
+            <span>O</span>
+            <span>G</span>
+            <span>I</span>
+            <span>N</span>
+        </h1>
+        
+        <div class="input-group">
+            <label for="password" class="rainbow-text">Enter Secret Code</label>
+            <div class="input-wrapper">
+                <input type="password" id="password" placeholder="Enter the secret code (1234)">
+                <span class="toggle-password" id="togglePassword">👁️</span>
+            </div>
+        </div>
+        
+        <button class="btn" onclick="checkPassword()">Unlock</button>
+        
+        <div class="forgot-password">
+            <a href="#">Forgot code?</a>
+        </div>
+        
+        <div class="password-hint">Hint: The code is "1234"</div>
+        
+        <div class="infinite-symbol">∞</div>
+    </div>
+    
+    <script>
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 1px and 3px
+                const size = Math.random() * 2 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.bottom = `-10px`;
+                
+                // Random animation duration
+                const duration = Math.random() * 10 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Toggle password visibility
+        function setupPasswordToggle() {
+            const togglePassword = document.getElementById('togglePassword');
+            const password = document.getElementById('password');
+            
+            togglePassword.addEventListener('click', function() {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                this.textContent = type === 'password' ? '👁️' : '🔒';
+            });
+        }
+        
+        // Check password function
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            if (password === '1234') {
+                // Create celebration effect
+                const emoji = document.querySelector('.emoji');
+                emoji.textContent = 'Login success';
+                emoji.style.fontSize = '4rem';
+                emoji.style.animation = 'none';
+                emoji.style.transform = 'translateX(-50%) rotate(360deg)';
+                
+                // Change title to success
+                const title = document.querySelector('.title');
+                title.innerHTML = '<span>A</span><span>C</span><span>C</span><span>E</span><span>S</span><span>S</span> <span>G</span><span>R</span><span>A</span><span>N</span><span>T</span><span>E</span><span>D</span>';
+                
+                // Change button text
+                const btn = document.querySelector('.btn');
+                btn.textContent = 'ENTERING...';
+                btn.style.background = 'linear-gradient(45deg, #00db4a, #00b03d)';
+                
+                // Redirect after delay
+                setTimeout(function() {
+                    window.location.href = 'hackloda.html';
+                }, 2000);
+            } else {
+                // Shake animation for wrong password
+                const passwordInput = document.getElementById('password');
+                passwordInput.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    passwordInput.style.animation = '';
+                }, 500);
+                
+                alert('Incorrect code. Hint: The code is "1234"');
+            }
+        }
+        
+        // Add shake animation to each letter in the title with different delays
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            setupPasswordToggle();
+            
+            const letters = document.querySelectorAll('.title span');
+            letters.forEach((letter, index) => {
+                // Each letter gets a slightly different animation delay
+                letter.style.animationDelay = `${index * 0.1}s`;
+            });
+            
+            // Add hover effect to input fields
+            const input = document.querySelector('.input-group input');
+            input.addEventListener('mouseenter', () => {
+                input.style.transform = 'translateY(-3px)';
+                input.style.boxShadow = '0 5px 15px rgba(0, 180, 219, 0.2)';
+            });
+            
+            input.addEventListener('mouseleave', () => {
+                input.style.transform = 'translateY(0)';
+                input.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
